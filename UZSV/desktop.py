@@ -2,6 +2,7 @@ from PySide6.QtWidgets import (
     QDialog, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget
 )
 
+from UZSV.login import LoginDialog
 class Shell(QMainWindow):
     # Размещение в главном окне элементов навигации и строки состояния
     def __init__(self):
@@ -13,8 +14,8 @@ class Shell(QMainWindow):
         layout.addWidget(QLabel('Управление защищенным сетевым взаимодействием'))
         self.state = QLabel('Стенд не подключен')
         layout.addWidget(self.state)
-        enter = QPushButton('Открыть панель')
-        enter.clicked.connect(self.open_panel)
+        enter = QPushButton('Вход')
+        enter.clicked.connect(self.open_login)
         layout.addWidget(enter)
         layout.addStretch()
         self.setCentralWidget(central)
@@ -26,3 +27,9 @@ class Shell(QMainWindow):
         layout = QVBoxLayout(window)
         layout.addWidget(QLabel('Подготовка подключения к стенду'))
         window.exec()
+
+    # Обработчик получает результат формы после закрытия диалога
+    def open_login(self):
+        login = LoginDialog(self)
+        if login.exec() == QDialog.DialogCode.Accepted:
+            self.state.setText('Форма завершена. Сервер будет подключен в скором времени.')
