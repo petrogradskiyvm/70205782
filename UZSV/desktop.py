@@ -3,6 +3,8 @@ from PySide6.QtWidgets import (
 )
 
 from UZSV.login import LoginDialog
+from UZSV.help import HelpDialog
+
 class Shell(QMainWindow):
     # Размещение в главном окне элементов навигации и строки состояния
     def __init__(self):
@@ -19,6 +21,7 @@ class Shell(QMainWindow):
         layout.addWidget(enter)
         layout.addStretch()
         self.setCentralWidget(central)
+        self.menuBar().addAction('Информационная справка', lambda: HelpDialog(self).exec()) # lambda открывает новое окно по нажатию и сохраняет ссылку на главное окно как на родителя
 
     def open_panel(self):
         # Модальный диалог показывает панель поверх главного окна
